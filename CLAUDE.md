@@ -133,28 +133,30 @@ npm run build        # standalone 빌드 → Azure 배포
 
 **"빌드해줘" 또는 "빌드하고 릴리스해" 라고 요청받을 때만 아래 절차를 따른다. 명시적 요청 없이는 버전을 절대 올리지 않는다.**
 
-### APK 빌드 절차
+### APK 빌드 절차 (터미널 자동화)
 1. `build-version.txt` 현재 버전 읽기 (예: `0.01`)
-2. 버전 0.01 단위 증가 (예: `0.01` → `0.02`)
-3. `build-version.txt` 새 버전으로 업데이트
-4. Next.js 빌드 + Capacitor sync:
+2. 버전 0.01 단위 증가 (예: `0.01` → `0.02`), `build-version.txt` 업데이트
+3. Next.js 빌드 + Capacitor sync:
    ```bash
    npm run build:app
    ```
-5. Android Studio에서 APK 빌드:
-   - Build > Build App Bundle(s) / APK(s) > Build APK(s)
+4. Gradle로 APK 빌드 (Java 17+ 필요 — Android Studio 번들 JDK 사용):
+   ```bash
+   cd android
+   JAVA_HOME="/c/Program Files/Android/Android Studio/jbr" ./gradlew assembleDebug
+   cd ..
+   ```
    - 출력 경로: `android/app/build/outputs/apk/debug/app-debug.apk`
-6. 빌드된 APK를 버전명으로 복사:
+5. APK를 버전명으로 복사:
    ```bash
    cp android/app/build/outputs/apk/debug/app-debug.apk \
       android/app/build/outputs/apk/debug/app-debug-version{NEW_VERSION}.apk
    ```
-7. GitHub Release 생성 (태그: `v{NEW_VERSION}`), 최신 버전 APK 첨부:
-   ```bash
-   gh release create v{NEW_VERSION} \
-     android/app/build/outputs/apk/debug/app-debug-version{NEW_VERSION}.apk \
-     --title "BYBAEK v{NEW_VERSION}" \
-     --notes "버전 {NEW_VERSION} 릴리스"
+6. `build-version.txt` 커밋 + 푸시 후 GitHub Release 생성 (Python API 사용):
+   ```python
+   # GitHub API로 릴리스 생성 후 APK 업로드
+   # TOKEN: git credential manager에서 획득
+   # REPO: Etchroot/BYBAEK-Frontend-App
    ```
 
 ### APK 파일 위치
