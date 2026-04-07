@@ -283,3 +283,30 @@
 | CLAUDE.md push 전 task.md 업데이트 규칙 추가 | ✅ 완료 | `CLAUDE.md` |
 | CLAUDE.md 작업 세션 후 날짜 기입 요약 규칙 추가 | ✅ 완료 | `CLAUDE.md` |
 | 리팩토링 커밋 분리 후 task.md 섹션 17 기록 | ✅ 완료 | `task.md` |
+
+---
+
+## 21. Capacitor 모바일 앱 전환 (2026-04-07)
+
+| 작업 | 상태 | 대상 파일 |
+|------|------|-----------|
+| Next.js output: standalone → export 전환 | ✅ 완료 | `next.config.ts` |
+| images.unoptimized: true 설정 | ✅ 완료 | `next.config.ts` |
+| API 라우트 제거 (static export 호환) | ✅ 완료 | `src/app/api/sync-onedrive/route.ts` (삭제) |
+| PhotoSyncProgress 백엔드 직접 호출로 전환 | ✅ 완료 | `src/components/PhotoSyncProgress.tsx` |
+| 동적 라우트 /post/[id] → /post?id= 쿼리 파라미터 방식 전환 | ✅ 완료 | `src/app/post/page.tsx`, `src/app/dashboard/page.tsx` |
+| Capacitor 7 설치 (core, cli, browser, app, android, ios) | ✅ 완료 | `package.json`, `capacitor.config.ts` |
+| Android/iOS 네이티브 플랫폼 추가 | ✅ 완료 | `android/`, `ios/` |
+| 앱 빌드 스크립트 추가 (build:app, cap:open:*) | ✅ 완료 | `package.json` |
+| 플랫폼 감지 유틸리티 생성 | ✅ 완료 | `src/utils/platform.ts` |
+| OAuth 헬퍼 생성 (웹/앱 분기) | ✅ 완료 | `src/utils/oauth.ts` |
+| 로그인 OAuth 플로우 Capacitor 대응 | ✅ 완료 | `src/app/login/page.tsx` |
+| 설정 OAuth 플로우 Capacitor 대응 | ✅ 완료 | `src/app/setting/page.tsx` |
+| OAuth 콜백 네이티브 guard 추가 | ✅ 완료 | `src/app/auth/callback/page.tsx` |
+| Android 딥링크 설정 (intent-filter) | ✅ 완료 | `android/app/src/main/AndroidManifest.xml` |
+| iOS URL scheme 설정 | ✅ 완료 | `ios/App/App/Info.plist` |
+| CI/CD artifact 경로 out/으로 변경 | ✅ 완료 | `.github/workflows/main_bybaek-frontend.yml` |
+| viewport-fit=cover 메타 태그 추가 | ✅ 완료 | `src/app/layout.tsx` |
+| Safe Area CSS 유틸리티 추가 | ✅ 완료 | `src/app/globals.css` |
+| .gitignore Capacitor 빌드 아티팩트 추가 | ✅ 완료 | `.gitignore` |
+| AppPlan.md 전환 계획서 작성 | ✅ 완료 | `AppPlan.md` |

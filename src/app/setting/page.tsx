@@ -9,6 +9,7 @@ import { getOnboardingQuestions, mapDBToSurveyAnswers } from '@/utils/constants/
 import apiClient from '@/api/index';
 // 🚨 [다국어 적용] 번역 훅 추가
 import { useTranslation } from '@/hooks/useTranslation';
+import { openOAuthPopup, listenForOAuthCallback, getRedirectUri } from '@/utils/oauth';
 
 type AuthModalType = 'NONE' | 'Microsoft' | 'Instagram' | 'Gmail';
 type AuthStatus = 'IDLE' | 'IN_PROGRESS' | 'COMPLETED';
@@ -140,25 +141,24 @@ export default function SettingScreen() {
   }, [shopId]);
 
   useEffect(() => {
-    const handleAuthMessage = (event: MessageEvent) => {
-      if (event.data === 'MS_LOGIN_SUCCESS' && activeAuthModal === 'Microsoft') {
+    const cleanup = listenForOAuthCallback((eventType) => {
+      if (eventType === 'MS_LOGIN_SUCCESS' && activeAuthModal === 'Microsoft') {
         setAuthStatus('COMPLETED');
         setIsMicrosoftConnected(true);
         updateSetting({ is_ms_connected: true });
       }
-      if (event.data === 'INSTA_LOGIN_SUCCESS' && activeAuthModal === 'Instagram') {
+      if (eventType === 'INSTA_LOGIN_SUCCESS' && activeAuthModal === 'Instagram') {
         setAuthStatus('COMPLETED');
         setIsInstagramConnected(true);
         updateSetting({ is_insta_connected: true });
       }
-      if (event.data === 'GMAIL_LOGIN_SUCCESS' && activeAuthModal === 'Gmail') {
+      if (eventType === 'GMAIL_LOGIN_SUCCESS' && activeAuthModal === 'Gmail') {
         setAuthStatus('COMPLETED');
         setIsGmailConnected(true);
         updateSetting({ is_gmail_connected: true });
       }
-    };
-    window.addEventListener('message', handleAuthMessage);
-    return () => window.removeEventListener('message', handleAuthMessage);
+    });
+    return cleanup;
   }, [activeAuthModal]);
 
   const handleToggleAutoUpload = (val: boolean) => {
@@ -175,11 +175,10 @@ export default function SettingScreen() {
     window.location.reload();
   };
 
-  const triggerExternalPopup = (platform: AuthModalType) => {
+  const triggerExternalPopup = async (platform: AuthModalType) => {
     setAuthStatus('IN_PROGRESS');
-    
-    const currentOrigin = window.location.origin;
-    const callbackUrl = encodeURIComponent(`${currentOrigin}/auth/callback`);
+
+    const callbackUrl = encodeURIComponent(getRedirectUri());
     let authUrl = '';
 
     if (platform === 'Microsoft') {
@@ -187,19 +186,11 @@ export default function SettingScreen() {
     } else if (platform === 'Instagram') {
       authUrl = `https://www.instagram.com/oauth/authorize?force_reauth=true&client_id=1219138883682659&redirect_uri=${callbackUrl}&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights`;
     } else if (platform === 'Gmail') {
-      authUrl = 'https://accounts.google.com/'; 
+      authUrl = 'https://accounts.google.com/';
     }
 
     if (authUrl !== '') {
-      const popup = window.open(authUrl, `${platform}_Login_Popup`, 'width=500,height=600');
-      if (!popup) {
-        setCustomAlert({
-          isOpen: true,
-          message: t.setting.popup_blocked, 
-          type: 'ALERT'
-        });
-        setAuthStatus('IDLE');
-      }
+      await openOAuthPopup(authUrl, `${platform}_Login_Popup`);
     }
   };
 

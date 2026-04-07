@@ -25,8 +25,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
       {/* 3. 폰트 클래스(notoSansKr.className)를 body에 주입하고,
-        하드코딩된 헥스 코드 대신 tailwind.config.ts에 정의한 시맨틱 컬러 사용 
+        하드코딩된 헥스 코드 대신 tailwind.config.ts에 정의한 시맨틱 컬러 사용
       */}
       <body className={`${notoSansKr.className} bg-background text-text-primary min-h-screen flex flex-col`}>
         {children}

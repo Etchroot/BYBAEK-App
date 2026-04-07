@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { isNative } from '@/utils/platform';
 
 export default function AuthCallback() {
   const { t } = useTranslation();
@@ -16,6 +17,12 @@ export default function AuthCallback() {
   useEffect(() => {
     if (typeof window === "undefined" || hasFetched.current) return;
     hasFetched.current = true; // 한 번 실행되면 잠금!
+
+    // 네이티브 앱에서는 딥링크가 직접 처리하므로 이 페이지 불필요
+    if (isNative()) {
+      window.location.href = '/login';
+      return;
+    }
 
     const searchParams = new URLSearchParams(window.location.search);
     const code = searchParams.get('code');

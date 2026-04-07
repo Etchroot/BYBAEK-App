@@ -122,7 +122,7 @@ export default function DashboardScreen() {
                 // 🚨 [핵심 수정] updated_at이 있으면 우선 사용하고, 없으면 created_at 사용!
                 title={formatDate(post.updated_at || post.created_at)} 
                 imageUrl={post.thumbnail_url}
-                onPress={() => router.push(`/post/${post.id}?shop_id=${shopId}`)} 
+                onPress={() => router.push(`/post?id=${post.id}&shop_id=${shopId}`)} 
               />
             ))}
           </div>

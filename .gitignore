@@ -146,3 +146,7 @@ next-env.d.ts
 
 # Claude Code local settings (machine-specific, never commit)
 .claude/
+
+# Capacitor build artifacts
+android/app/build/
+ios/App/Pods/

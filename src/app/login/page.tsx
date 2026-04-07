@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from '@/hooks/useTranslation';
 import apiClient from '@/api/index';
 import Image from 'next/image';
+import { openOAuthPopup, listenForOAuthCallback, getRedirectUri } from '@/utils/oauth';
 
 // 🚨 [유지] LANGUAGE_SELECT 단계 포함 완벽한 타입 정의
 type LoginStep = 'LANGUAGE_SELECT' | 'MS_LOGIN' | 'ONEDRIVE_QR' | 'INSTA_LOGIN';
@@ -41,12 +42,12 @@ export default function LoginScreen() {
     if (savedLanguage) setStep('MS_LOGIN');
   }, [isMounted]);
 
-  // 팝업 인증 메시지 수신
+  // OAuth 인증 메시지 수신 (웹: postMessage, 네이티브: 딥링크)
   useEffect(() => {
     if (!isMounted) return;
 
-    const handleAuthMessage = async (event: MessageEvent) => {
-      if (event.data === 'MS_LOGIN_SUCCESS') {
+    const cleanup = listenForOAuthCallback(async (eventType) => {
+      if (eventType === 'MS_LOGIN_SUCCESS') {
         try {
           const response = await apiClient.get('/auth/me');
           const { shop_id } = response.data;
@@ -69,13 +70,12 @@ export default function LoginScreen() {
           // MS 유저 동기화 실패
         }
       }
-      if (event.data === 'INSTA_LOGIN_SUCCESS') {
+      if (eventType === 'INSTA_LOGIN_SUCCESS') {
         setInstaLoginStatus('COMPLETED');
       }
-    };
+    });
 
-    window.addEventListener('message', handleAuthMessage);
-    return () => window.removeEventListener('message', handleAuthMessage);
+    return cleanup;
   }, [isMounted]);
 
   // MS 인증 성공 시 자동으로 다음 단계(QR)로 넘어가게 하는 타이머
@@ -101,17 +101,16 @@ export default function LoginScreen() {
 
   const handleMsLoginClick = () => {
     setMsLoginStatus('IN_PROGRESS');
-    const frontendCallbackUrl = encodeURIComponent(`${window.location.origin}/auth/callback`);
-    // 🚨 [복구] 깔끔한 변수 사용
+    const frontendCallbackUrl = encodeURIComponent(getRedirectUri());
     const loginUrl = `${BACKEND_URL}/.auth/login/aad?post_login_redirect_uri=${frontendCallbackUrl}`;
-    window.open(loginUrl, 'MS_Login_Popup', 'width=500,height=600');
+    openOAuthPopup(loginUrl, 'MS_Login_Popup');
   };
 
   const handleInstaLoginClick = () => {
     setInstaLoginStatus('IN_PROGRESS');
-    const redirectUri = encodeURIComponent(`${window.location.origin}/auth/callback`);
+    const redirectUri = encodeURIComponent(getRedirectUri());
     const instaUrl = `https://www.instagram.com/oauth/authorize?force_reauth=true&client_id=${process.env.NEXT_PUBLIC_INSTAGRAM_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights`;
-    window.open(instaUrl, 'Insta_Login_Popup', 'width=500,height=600');
+    openOAuthPopup(instaUrl, 'Insta_Login_Popup');
   };
 
   const handleFinishLogin = () => {

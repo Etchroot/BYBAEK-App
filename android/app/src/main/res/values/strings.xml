@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">BYBAEK</string>
+    <string name="title_activity_main">BYBAEK</string>
+    <string name="package_name">com.bybaek.app</string>
+    <string name="custom_url_scheme">com.bybaek.app</string>
+</resources>
