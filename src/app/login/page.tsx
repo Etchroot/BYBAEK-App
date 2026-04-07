@@ -13,7 +13,7 @@ type LoginStep = 'LANGUAGE_SELECT' | 'MS_LOGIN' | 'ONEDRIVE_QR' | 'INSTA_LOGIN';
 type LoginStatus = 'IDLE' | 'IN_PROGRESS' | 'COMPLETED';
 
 // 🚨 [복구] 사장님이 깔끔하게 빼두셨던 백엔드 주소 상수!
-const BACKEND_URL = 'https://bybaek-f.azurewebsites.net';
+const BACKEND_URL = 'https://bybaek-b-bzhhgzh8d2gthpb3.koreacentral-01.azurewebsites.net';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -101,8 +101,7 @@ export default function LoginScreen() {
 
   const handleMsLoginClick = () => {
     setMsLoginStatus('IN_PROGRESS');
-    const frontendCallbackUrl = encodeURIComponent(getRedirectUri());
-    const loginUrl = `${BACKEND_URL}/.auth/login/aad?post_login_redirect_uri=${frontendCallbackUrl}`;
+    const loginUrl = `${BACKEND_URL}/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent(`${BACKEND_URL}/api/auth/ms/callback`)}`;
     openOAuthPopup(loginUrl, 'MS_Login_Popup');
   };
 

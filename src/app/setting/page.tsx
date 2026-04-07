@@ -182,7 +182,7 @@ export default function SettingScreen() {
     let authUrl = '';
 
     if (platform === 'Microsoft') {
-      authUrl = `https://bybaek-f.azurewebsites.net/.auth/login/aad?post_login_redirect_uri=${callbackUrl}`;
+      authUrl = `https://bybaek-b-bzhhgzh8d2gthpb3.koreacentral-01.azurewebsites.net/.auth/login/aad?post_login_redirect_uri=${encodeURIComponent('https://bybaek-b-bzhhgzh8d2gthpb3.koreacentral-01.azurewebsites.net/api/auth/ms/callback')}`;
     } else if (platform === 'Instagram') {
       authUrl = `https://www.instagram.com/oauth/authorize?force_reauth=true&client_id=1219138883682659&redirect_uri=${callbackUrl}&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_manage_insights`;
     } else if (platform === 'Gmail') {

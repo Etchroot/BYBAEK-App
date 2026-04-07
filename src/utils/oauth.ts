@@ -2,7 +2,7 @@ import { Browser } from '@capacitor/browser';
 import { App } from '@capacitor/app';
 import { isNative } from './platform';
 
-const BACKEND_URL = 'https://bybaek-f.azurewebsites.net';
+const BACKEND_URL = 'https://bybaek-b-bzhhgzh8d2gthpb3.koreacentral-01.azurewebsites.net';
 
 /**
  * OAuth redirect URI를 플랫폼에 맞게 반환
