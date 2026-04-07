@@ -129,6 +129,39 @@ npm run build        # standalone 빌드 → Azure 배포
 - `trd.md`: 기술 상세 설명서 (API 엔드포인트, 온보딩 데이터 형식, 컴포넌트 상세 등)
 - `task.md`: 기능별 작업 현황 추적
 
+## APK 빌드 & GitHub Release 규칙
+
+**"빌드해줘" 또는 "빌드하고 릴리스해" 라고 요청받을 때만 아래 절차를 따른다. 명시적 요청 없이는 버전을 절대 올리지 않는다.**
+
+### APK 빌드 절차
+1. `build-version.txt` 현재 버전 읽기 (예: `0.01`)
+2. 버전 0.01 단위 증가 (예: `0.01` → `0.02`)
+3. `build-version.txt` 새 버전으로 업데이트
+4. Next.js 빌드 + Capacitor sync:
+   ```bash
+   npm run build:app
+   ```
+5. Android Studio에서 APK 빌드:
+   - Build > Build App Bundle(s) / APK(s) > Build APK(s)
+   - 출력 경로: `android/app/build/outputs/apk/debug/app-debug.apk`
+6. 빌드된 APK를 버전명으로 복사:
+   ```bash
+   cp android/app/build/outputs/apk/debug/app-debug.apk \
+      android/app/build/outputs/apk/debug/app-debug-version{NEW_VERSION}.apk
+   ```
+7. GitHub Release 생성 (태그: `v{NEW_VERSION}`), 최신 버전 APK 첨부:
+   ```bash
+   gh release create v{NEW_VERSION} \
+     android/app/build/outputs/apk/debug/app-debug-version{NEW_VERSION}.apk \
+     --title "BYBAEK v{NEW_VERSION}" \
+     --notes "버전 {NEW_VERSION} 릴리스"
+   ```
+
+### APK 파일 위치
+- `android/app/build/outputs/apk/debug/app-debug.apk` — 최신 빌드
+- `android/app/build/outputs/apk/debug/app-debug-version{X.XX}.apk` — 버전별 보관본
+- `build-version.txt` — 현재 릴리스된 최신 버전 번호
+
 ## 작업 규칙
 
 **BEFORE every git push:** If any feature was added, modified, or removed, you MUST update `task.md` before staging the commit. Never push without updating `task.md` when functional changes exist.
