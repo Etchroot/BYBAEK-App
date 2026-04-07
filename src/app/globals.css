@@ -1,0 +1,46 @@
+/* src/app/globals.css */
+@import "tailwindcss"; /* v4에서는 이 한 줄로 모든 게 시작돼 */
+
+@theme {
+  /* 1. 색상 팔레트 정의 (CSS 변수 방식) */
+  --color-background: #FFFFFF;
+  --color-sidebar: #1A1A1A;
+  --color-text-primary: #1A1A1A;
+  --color-text-inverse: #FFFFFF;
+  --color-text-secondary: #757575;
+  --color-accent: #800020;
+  --color-accent-dark: #500014;
+  --color-border: #E0E0E0;
+
+  /* 2. 타이포그래피 (폰트 크기) */
+  --font-size-h1: 24px;
+  --font-size-h2: 18px;
+  --font-size-body: 14px;
+  --font-size-button: 16px;
+
+  /* 3. 간격 (Spacing) */
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 24px;
+  --spacing-xlarge: 32px;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  button, 
+  [role="button"],
+  a {
+    cursor: pointer;
+  }
+  
+  /* 만약 버튼이 비활성화(disabled) 상태일 때는 손가락 모양을 끄고 싶다면 아래 코드도 추가! */
+  button:disabled,
+  [role="button"]:disabled {
+    cursor: not-allowed;
+  }
+}
