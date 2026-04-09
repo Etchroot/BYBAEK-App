@@ -166,9 +166,15 @@ npm run build        # standalone 빌드 → Azure 배포
 
 ## 작업 규칙
 
-**BEFORE every git push:** If any feature was added, modified, or removed, you MUST update `task.md` before staging the commit. Never push without updating `task.md` when functional changes exist.
+### task.md 업데이트 규칙 (필수)
 
-**After every work session:** Append a dated summary section to `task.md` using the format below. Always use the actual date (YYYY-MM-DD). Include every task completed in that session, even minor ones.
+**코드 변경이 있는 모든 커밋 전에 반드시 task.md를 먼저 업데이트해야 한다.**
+기능 추가, 수정, 삭제, 버그 수정, 설정 변경 등 어떤 종류든 코드 변경이 있으면 예외 없이 적용.
+
+**업데이트 절차:**
+1. `task.md` 하단에 아래 형식으로 새 섹션 추가
+2. 요약 테이블(상단)의 완료 수와 전체 수 업데이트
+3. task.md 업데이트 후 → git add → git commit 순서 준수
 
 ```
 ## [섹션번호]. [작업명] (YYYY-MM-DD)
@@ -178,4 +184,4 @@ npm run build        # standalone 빌드 → Azure 배포
 | 작업 내용 | ✅ 완료 | `파일명` |
 ```
 
-Then update the summary table totals at the top of `task.md` to match.
+**⚠️ task.md 업데이트 없이 커밋/푸시 금지. 위반 시 즉시 task.md 업데이트 후 재커밋.**
