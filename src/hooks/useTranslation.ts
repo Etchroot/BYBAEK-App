@@ -25,7 +25,7 @@ export const useTranslation = () => {
         setLang(savedLang);
       }
     }
-  }, [lang]);
+  }, []);
 
   // 현재 언어에 맞는 사전 뭉치를 꺼냅니다.
   const t = translations[lang];

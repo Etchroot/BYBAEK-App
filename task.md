@@ -226,7 +226,9 @@
 | 법적 고지 문서 | 3 | 0 | 100% |
 | QR 코드 개선 | 2 | 0 | 100% |
 | 프로젝트 문서 정비 | 3 | 0 | 100% |
-| **전체** | **112** | **0** | **100%** |
+| Azure URL 변경 | 5 | 0 | 100% |
+| 버그 수정 (HIGH/MEDIUM/LOW) | 10 | 0 | 100% |
+| **전체** | **127** | **0** | **100%** |
 
 > 현재까지 커밋된 모든 기능이 완료 상태입니다. 향후 새로운 작업이 추가되면 이 문서에 기록합니다.
 
@@ -310,3 +312,33 @@
 | Safe Area CSS 유틸리티 추가 | ✅ 완료 | `src/app/globals.css` |
 | .gitignore Capacitor 빌드 아티팩트 추가 | ✅ 완료 | `.gitignore` |
 | AppPlan.md 전환 계획서 작성 | ✅ 완료 | `AppPlan.md` |
+
+---
+
+## 22. Azure 백엔드 URL 변경 (2026-04-09)
+
+| 작업 | 상태 | 대상 파일 |
+|------|------|-----------|
+| Axios baseURL 신규 도메인으로 변경 | ✅ 완료 | `src/api/index.ts` |
+| Instagram 인증 엔드포인트 URL 변경 | ✅ 완료 | `src/app/auth/callback/page.tsx` |
+| MS 로그인 BACKEND_URL 변경 | ✅ 완료 | `src/app/login/page.tsx` |
+| MS 로그인 BACKEND_URL 변경 (설정 페이지) | ✅ 완료 | `src/app/setting/page.tsx` |
+| OAuth 헬퍼 BACKEND_URL 변경 | ✅ 완료 | `src/utils/oauth.ts` |
+
+---
+
+## 23. 잠재적 버그 수정 — HIGH/MEDIUM/LOW (2026-04-09)
+
+| 작업 | 상태 | 대상 파일 |
+|------|------|-----------|
+| [HIGH] localStorage SSR 가드 추가 | ✅ 완료 | `src/app/page.tsx` |
+| [HIGH] 스트리밍 reader undefined 명시적 에러 처리 | ✅ 완료 | `src/app/preview/page.tsx` |
+| [HIGH] JSON 파싱 후 hashtags 타입 검증 | ✅ 완료 | `src/app/preview/page.tsx` |
+| [HIGH] insta_upload_time split 이중 검증 | ✅ 완료 | `src/app/setting/page.tsx` |
+| [HIGH] postMessage wildcard '*' → window.location.origin | ✅ 완료 | `src/app/auth/callback/page.tsx` |
+| [MEDIUM] photos 배열 인덱스 범위 filter 추가 | ✅ 완료 | `src/app/photos/page.tsx` |
+| [MEDIUM] localStorage try-catch 추가 | ✅ 완료 | `src/app/dashboard/page.tsx`, `photos/page.tsx`, `album/page.tsx` |
+| [MEDIUM] useTranslation useEffect 의존성 [lang]→[] | ✅ 완료 | `src/hooks/useTranslation.ts` |
+| [MEDIUM] albums API 응답 Array.isArray 검증 | ✅ 완료 | `src/app/preview/page.tsx` |
+| [LOW] as any → as Record<string, string> | ✅ 완료 | `src/components/OnboardingSurvey.tsx` |
+| 버그 수정 이력 test.md 업데이트 | ✅ 완료 | `test.md` |

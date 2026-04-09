@@ -11,6 +11,7 @@ export default function LandingScreen() {
   // 화면(로고) 클릭 시 실행되는 분기 로직
   const handleStartClick = () => {
     // 1. 로컬 스토리지에서 로그인 기록(isLoggedIn) 확인
+    if (typeof window === 'undefined') return;
     const isLoggedIn = localStorage.getItem('isLoggedIn');
 
     // 2. 로그인 기록이 있다면 바로 대시보드로 이동

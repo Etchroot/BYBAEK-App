@@ -37,8 +37,12 @@ export default function AllPhotosScreen() {
   const [shopId, setShopId] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedShopId = localStorage.getItem('shop_id');
-    setShopId(storedShopId);
+    try {
+      const storedShopId = localStorage.getItem('shop_id');
+      setShopId(storedShopId);
+    } catch {
+      // localStorage 접근 실패 시 무시
+    }
   }, []);
 
   const fetchPhotos = async () => {
@@ -89,7 +93,7 @@ export default function AllPhotosScreen() {
       onConfirm: async () => {
         try {
           await Promise.all(
-            selectedIndexes.map(async (idx) => {
+            selectedIndexes.filter((idx) => idx >= 0 && idx < photos.length).map(async (idx) => {
               const photoId = photos[idx].id;
               // 백엔드 API 호출 (실제 DB 삭제 로직 트리거)
               return apiClient.delete(`/photos/${shopId}/${photoId}`);

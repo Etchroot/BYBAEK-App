@@ -273,7 +273,7 @@ export const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({
                       key={f} onClick={() => updateSchedule('frequency', f)}
                       className={`px-4 py-2 rounded-full border text-sm transition-colors cursor-pointer focus:outline-none ${currentSchedule.frequency === f ? 'bg-accent border-accent text-white font-bold' : 'bg-[#F0F0F0] border-border text-text-primary hover:bg-gray-200'}`} 
                     >
-                      {(t.setting.freq_map as any)[f] || f}
+                      {(t.setting.freq_map as Record<string, string>)[f] || f}
                     </button>
                   ))}
                 </div>

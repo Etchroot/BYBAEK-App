@@ -78,7 +78,8 @@ export default function PreviewScreen() {
         setAllPhotos(allRes.data.photos || []);
 
         const albumRes = await apiClient.get(`/photos/albums/${shopId}`);
-        setAlbums(albumRes.data.albums || albumRes.data || []);
+        const albumData = albumRes.data.albums ?? albumRes.data;
+        setAlbums(Array.isArray(albumData) ? albumData : []);
       } catch (error) {
         console.error('데이터 로딩 실패:', error);
       }
@@ -270,10 +271,11 @@ export default function PreviewScreen() {
       );
 
       const reader = response.body?.getReader();
+      if (!reader) throw new Error('스트리밍 응답을 읽을 수 없습니다.');
       const decoder = new TextDecoder('utf-8');
       let fullResponse = '';
 
-      while (reader) {
+      while (true) {
         const { value, done } = await reader.read();
         if (done) break;
 
@@ -289,9 +291,8 @@ export default function PreviewScreen() {
 
       try {
         const parsed = JSON.parse(fullResponse);
-        const display = parsed.caption + "\n\n"
-          + parsed.hashtags.join(" ") + "\n"
-          + (parsed.cta || "");
+        const hashtags = Array.isArray(parsed.hashtags) ? parsed.hashtags.join(" ") : (parsed.hashtags || "");
+        const display = (parsed.caption || "") + "\n\n" + hashtags + "\n" + (parsed.cta || "");
         setGeneratedCaption(display);
       } catch {
         setGeneratedCaption(fullResponse); // 파싱 실패시 원본

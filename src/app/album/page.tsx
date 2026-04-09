@@ -20,8 +20,12 @@ export default function MyAlbumScreen() {
   const [shopId, setShopId] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedShopId = localStorage.getItem('shop_id');
-    setShopId(storedShopId); 
+    try {
+      const storedShopId = localStorage.getItem('shop_id');
+      setShopId(storedShopId);
+    } catch {
+      // localStorage 접근 실패 시 무시
+    }
   }, []);
 
   const { t } = useTranslation();

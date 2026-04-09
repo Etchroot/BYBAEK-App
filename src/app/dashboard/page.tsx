@@ -22,8 +22,14 @@ export default function DashboardScreen() {
   
   // 1. 페이지 로드 시 localStorage에서 정보를 먼저 가져옴
   useEffect(() => {
-    const storedShopId = localStorage.getItem("shop_id");
-    const guestStatus = localStorage.getItem("isGuest");
+    let storedShopId: string | null = null;
+    let guestStatus: string | null = null;
+    try {
+      storedShopId = localStorage.getItem("shop_id");
+      guestStatus = localStorage.getItem("isGuest");
+    } catch {
+      // localStorage 접근 실패 시 무시 (시크릿 모드 등)
+    }
 
     if (guestStatus === "true") {
       setIsGuest(true);

@@ -45,7 +45,7 @@ export default function AuthCallback() {
           if (response.ok) {
             setStatusMsg(t.auth?.insta_success || "인스타그램 연동 성공!");
             if (window.opener) {
-              window.opener.postMessage('INSTA_LOGIN_SUCCESS', '*');
+              window.opener.postMessage('INSTA_LOGIN_SUCCESS', window.location.origin);
               setTimeout(() => window.close(), 1500);
             }
           } else {
@@ -65,7 +65,7 @@ export default function AuthCallback() {
       // 2. MS 로그인 완료 처리 분기
       setStatusMsg(t.auth?.ms_success || "Microsoft 인증 완료!");
       if (window.opener) {
-        window.opener.postMessage('MS_LOGIN_SUCCESS', '*');
+        window.opener.postMessage('MS_LOGIN_SUCCESS', window.location.origin);
         setTimeout(() => window.close(), 1500);
       } else {
         window.location.href = '/login';

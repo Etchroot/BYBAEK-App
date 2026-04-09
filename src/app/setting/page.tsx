@@ -125,9 +125,15 @@ export default function SettingScreen() {
           setGmailAddress(data.owner_email || '');
           
           if (data.insta_upload_time) {
-             const [time, period] = data.insta_upload_time.split(' ');
-             const [h, m] = time.split(':');
-             setHour(h); setMinute(m); setAmPm(period);
+            const parts = data.insta_upload_time.split(' ');
+            if (parts.length === 2) {
+              const [time, period] = parts;
+              const timeParts = time.split(':');
+              if (timeParts.length === 2) {
+                const [h, m] = timeParts;
+                setHour(h); setMinute(m); setAmPm(period);
+              }
+            }
           }
           if (data.insta_upload_time_slot) setFrequency(data.insta_upload_time_slot);
         }
