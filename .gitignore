@@ -150,3 +150,6 @@ next-env.d.ts
 # Capacitor build artifacts
 android/app/build/
 ios/App/Pods/
+
+# Android Studio IDE settings
+android/.idea/

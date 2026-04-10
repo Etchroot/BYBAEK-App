@@ -156,7 +156,7 @@ npm run build        # standalone 빌드 → Azure 배포
    ```python
    # GitHub API로 릴리스 생성 후 APK 업로드
    # TOKEN: git credential manager에서 획득
-   # REPO: Etchroot/BYBAEK-Frontend-App
+   # REPO: Etchroot/BYBAEK-App
    ```
 
 ### APK 파일 위치
