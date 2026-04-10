@@ -1,0 +1,25 @@
+# 의존성
+node_modules/
+package-lock.json
+
+# Next.js 빌드 산출물
+.next/
+out/
+
+# Android 빌드 산출물 및 캐시
+android/.gradle/
+android/build/
+android/capacitor-cordova-android-plugins/
+
+# iOS 자동 생성 파일
+ios/capacitor-cordova-ios-plugins/
+ios/App/Pods/
+
+# 정적 에셋 (이미지, SVG)
+public/
+
+# 자동 생성 파일
+next-env.d.ts
+
+# Claude 내부 설정
+.claude/
