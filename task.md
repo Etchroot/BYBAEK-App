@@ -342,3 +342,13 @@
 | [MEDIUM] albums API 응답 Array.isArray 검증 | ✅ 완료 | `src/app/preview/page.tsx` |
 | [LOW] as any → as Record<string, string> | ✅ 완료 | `src/components/OnboardingSurvey.tsx` |
 | 버그 수정 이력 test.md 업데이트 | ✅ 완료 | `test.md` |
+
+---
+
+## 24. GitHub Actions 워크플로우 제거 (2026-04-10)
+
+| 작업 | 상태 | 대상 파일 |
+|------|------|-----------|
+| Azure 자동 배포 워크플로우 삭제 | ✅ 완료 | `.github/workflows/main_bybaek-frontend.yml` |
+
+> 앱 레포에서 Azure 웹 자동 배포 불필요. APK는 로컬 Gradle 수동 빌드 방식 유지.
