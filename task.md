@@ -228,7 +228,8 @@
 | 프로젝트 문서 정비 | 3 | 0 | 100% |
 | Azure URL 변경 | 5 | 0 | 100% |
 | 버그 수정 (HIGH/MEDIUM/LOW) | 10 | 0 | 100% |
-| **전체** | **127** | **0** | **100%** |
+| APK 빌드 및 GitHub Release | 4 | 0 | 100% |
+| **전체** | **131** | **0** | **100%** |
 
 > 현재까지 커밋된 모든 기능이 완료 상태입니다. 향후 새로운 작업이 추가되면 이 문서에 기록합니다.
 
@@ -352,3 +353,14 @@
 | Azure 자동 배포 워크플로우 삭제 | ✅ 완료 | `.github/workflows/main_bybaek-frontend.yml` |
 
 > 앱 레포에서 Azure 웹 자동 배포 불필요. APK는 로컬 Gradle 수동 빌드 방식 유지.
+
+---
+
+## 25. APK 빌드 및 GitHub Release 배포 (2026-04-18)
+
+| 작업 | 상태 | 대상 파일 |
+|------|------|-----------|
+| test.md 생성 (코드 오류 분석 리포트 포함) | ✅ 완료 | `test.md` |
+| build-version.txt 생성 (현재 버전 0.01) | ✅ 완료 | `build-version.txt` |
+| app-debug-version0.01.apk 빌드 (Gradle assembleDebug) | ✅ 완료 | `android/app/build/outputs/apk/debug/app-debug-version0.01.apk` |
+| GitHub Release v2026.04.08 생성 및 APK 업로드 | ✅ 완료 | GitHub Releases |
